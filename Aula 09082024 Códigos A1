@@ -1,0 +1,78 @@
+@startuml
+actor Paciente
+actor Atendente
+actor Enfermeiro
+actor Medico
+
+Paciente --> (Receber Paciente)
+(Receber Paciente) --> Atendente
+(Receber Paciente) --> (Registrar Dados e Queixa)
+(Registrar Dados e Queixa) --> Atendente
+(Registrar Dados e Queixa) --> (Medir Pressao e Temperatura)
+(Medir Pressao e Temperatura) --> Enfermeiro
+(Medir Pressao e Temperatura) --> (Consulta com Medico)
+(Consulta com Medico) --> Medico
+(Consulta com Medico) --> (Preencher Prontuario)
+(Preencher Prontuario) --> Medico
+(Preencher Prontuario) --> (Encaminhar para Internacao) : Condicional
+(Encaminhar para Internacao) --> Medico
+@enduml
+
+
+
+
+
+
+
+@startuml
+class Paciente {
+  +nome: String
+  +dataNascimento: Date
+  +queixa: String
+}
+
+class Atendente {
+  +nome: String
+  +identificacao: String
+}
+
+class Enfermeiro {
+  +nome: String
+  +registroProfissional: String
+}
+
+class Medico {
+  +nome: String
+  +especialidade: String
+  +registroProfissional: String
+}
+
+class Prontuario {
+  +data: Date
+  +diagnostico: String
+  +tratamento: String
+}
+
+class Consulta {
+  +data: Date
+  +motivo: String
+}
+
+class Internacao {
+  +dataInicio: Date
+  +dataFim: Date
+  +motivo: String
+}
+
+Paciente "1" -- "1..*" Consulta
+Paciente "1" -- "1" Prontuario
+Consulta "1" -- "1" Medico
+Consulta "1" -- "1" Enfermeiro
+Medico "1" -- "0..1" Internacao : "Determina"
+Paciente "1" -- "0..1" Internacao
+@enduml
+
+
+
+
+
